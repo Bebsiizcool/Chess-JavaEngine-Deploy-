@@ -48,10 +48,12 @@ app.get('/api/health', (_req, res) => res.json({ status: 'ok', timestamp: new Da
 // ─── Global Error Handler ─────────────────────────────────────────────────
 app.use(errorHandler);
 
-// ─── Start ────────────────────────────────────────────────────────────────
-const PORT = process.env.PORT || 8080;
-server.listen(PORT, () => {
-  console.log(`ChessNova Express backend running on port ${PORT}`);
-});
+// ─── Start (only when run directly, not when imported by Vercel) ───────────
+if (require.main === module) {
+  const PORT = process.env.PORT || 8080;
+  server.listen(PORT, () => {
+    console.log(`ChessNova Express backend running on port ${PORT}`);
+  });
+}
 
 module.exports = app; // for Vercel
